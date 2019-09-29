@@ -1,5 +1,50 @@
+# Transactional Email Microservice for Zeebe
 
+Send transactional emails using Amazon SES in business processes deployed in Zeebe. 
 
+Watch me code this project from scratch live on YouTube:
+
+* [Part 1](https://www.youtube.com/watch?v=19LXTZc9KZM)
+* [Part 2](https://www.youtube.com/watch?v=SY9TWHnCFJw)
+
+This task worker services tasks of type `email:send`. The task should have a custom header with a key `email:template` with the name of the template to use.
+
+This worker is not intended to be used as-is, as a drop-in task worker, but rather as a POC to give you an idea on how to code something like this up for your system. Making a general-purpose, reusable service takes a lot of work, and requires a lot of abstract configuration. For example: should it support Mailgun? Sendgrid? What templating variables should it support and how should it support them?
+
+You can use this as a starter for your own transactional mail microservice, and structure it to fit your use-case.
+
+## To Run
+
+1. Start a local Zeebe broker using the [zeebe-docker-compose]() docker images (or set the environment variable ZEEBE_ADDRESS to point to your existing broker, or set the variables to [connect to Camunda Cloud](https://zeebe.io/blog/2019/09/getting-started-camunda-cloud/)).
+2. Clone this repo.
+3. Run `npm i && npm i -g pino-pretty` to install deps.
+4. Get your AWS SES credentials (Google it).
+5. Put them in the environment:
+
+```
+export ZEEBE_TXES_FROM_EMAIL=<your authorised sending address>
+export ZEEBE_TXES_AWS_SES_KEY=<AWS SES credential key>
+export ZEEBE_TXES_AWS_SES_SECRET=<AWS SES credential secret>
+```
+
+6. Start the microservice: `npm run start:dev | pino-pretty`
+7. Open the url http://localhost:3000/your@email.address/yourFirstName/yourLastName
+
+(Obviously substituting the values in the URL).
+
+You should recieve a welcome email in your inbox from the microservice.
+
+Watch the videos for more insight, or just read the code. Or why not both?
+
+Packages used in this POC:
+
+* [@payk/nestjs-zeebe](https://www.npmjs.com/package/@payk/nestjs-zeebe) - A zeebe transport and client for NestJS.
+* [@payk/nestjs-winston] - Winston for NestJS has never been this easy!
+* [micromustache](https://www.npmjs.com/package/micromustache) - A secure, fast and lightweight template engine with some handy additions.
+* [mailgen](https://www.npmjs.com/package/mailgen) - A Node.js package that generates clean, responsive HTML e-mails for sending transactional mail.
+* [node-ses](https://www.npmjs.com/package/node-ses) - A simple and reliable Node.js mail for sending mail through Amazon SES.
+
+---
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
