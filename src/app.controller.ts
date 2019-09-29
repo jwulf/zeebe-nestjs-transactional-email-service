@@ -1,9 +1,10 @@
-import { Controller, Get, Inject } from '@nestjs/common';
+import { Controller, Get, Inject, Param } from '@nestjs/common';
 import { AppService } from './app.service';
-import { ZBClient, Job } from 'zeebe-node';
+import { ZBClient } from 'zeebe-node';
 import {
     CreateWorkflowInstanceResponse,
     CompleteFn,
+    Job,
 } from 'zeebe-node/interfaces';
 import { ZEEBE_CONNECTION_PROVIDER, ZeebeWorker } from '@payk/nestjs-zeebe';
 import { Logger } from 'winston';
@@ -25,14 +26,19 @@ export class AppController {
         private readonly appService: AppService,
         @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
         @Inject(ZEEBE_CONNECTION_PROVIDER) private readonly zbClient: ZBClient,
-    ) {}
+    ) {
+        this.zbClient.deployWorkflow('./bpmn/email.test.bpmn');
+    }
 
     // Use the client to create a new workflow instance
-    @Get()
-    getHello(): Promise<CreateWorkflowInstanceResponse> {
-        return this.zbClient.createWorkflowInstance('order-process', {
-            test: 1,
-            or: 'romano',
+    @Get(':email/:firstName/:lastName')
+    getHello(@Param() param): Promise<CreateWorkflowInstanceResponse> {
+        const { email, firstName, lastName } = param;
+        this.logger.info({ email, firstName, lastName });
+        return this.zbClient.createWorkflowInstance('email.test', {
+            email,
+            firstName,
+            lastName,
         });
     }
 
@@ -44,7 +50,7 @@ export class AppController {
         this.logger.info('Email service');
         const template = job.customHeaders['email:template'];
         try {
-            this.appService.sendEmail(template, job.variables);
+            await this.appService.sendEmail(template, job.variables);
         } catch (e) {
             this.logger.error(e.message);
             return complete.failure(e.message);

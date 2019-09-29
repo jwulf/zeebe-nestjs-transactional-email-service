@@ -6,7 +6,7 @@
     </bpmn:startEvent>
     <bpmn:serviceTask id="ServiceTask_1udqo54" name="Send Welcome Email">
       <bpmn:extensionElements>
-        <zeebe:taskDefinition type="email:send" retries="3" />
+        <zeebe:taskDefinition type="email:send" retries="1" />
         <zeebe:taskHeaders>
           <zeebe:header key="email:template" value="welcome" />
         </zeebe:taskHeaders>
