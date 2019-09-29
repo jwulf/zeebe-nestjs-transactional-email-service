@@ -1,13 +1,19 @@
 # Transactional Email Microservice for Zeebe
 
-Send transactional emails using Amazon SES in business processes deployed in Zeebe. 
+Send templated transactional emails using Amazon SES from BPMN processes in [Zeebe.io](https://zeebe.io). 
+
+![](img/bpmn.png)
 
 Watch me code this project from scratch live on YouTube:
 
 * [Part 1](https://www.youtube.com/watch?v=19LXTZc9KZM)
 * [Part 2](https://www.youtube.com/watch?v=SY9TWHnCFJw)
 
-This task worker services tasks of type `email:send`. The task should have a custom header with a key `email:template` with the name of the template to use.
+A common task in any modern business is to send a transactional email: a welcome email, a password reset email, a receipt.
+
+This task worker services tasks of type `email:send`. The task should have a custom header with a key `email:template` with the name of the template to use. The template is used to generate plain-text and HTML email bodies with the variables from the job bound. The compiled email is then sent to the recipient using AWS SES.
+
+The worker fetches `email`, `firstName`, and `lastName` variables from the broker. 
 
 This worker is not intended to be used as-is, as a drop-in task worker, but rather as a POC to give you an idea on how to code something like this up for your system. Making a general-purpose, reusable service takes a lot of work, and requires a lot of abstract configuration. For example: should it support Mailgun? Sendgrid? What templating variables should it support and how should it support them?
 
