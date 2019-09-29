@@ -45,7 +45,7 @@ Watch the videos for more insight, or just read the code. Or why not both?
 Packages used in this POC:
 
 * [@payk/nestjs-zeebe](https://www.npmjs.com/package/@payk/nestjs-zeebe) - A zeebe transport and client for NestJS.
-* [@payk/nestjs-winston] - Winston for NestJS has never been this easy!
+* [@payk/nestjs-winston](https://www.npmjs.com/package/@payk/nestjs-winston) - Winston for NestJS has never been this easy!
 * [micromustache](https://www.npmjs.com/package/micromustache) - A secure, fast and lightweight template engine with some handy additions.
 * [mailgen](https://www.npmjs.com/package/mailgen) - A Node.js package that generates clean, responsive HTML e-mails for sending transactional mail.
 * [node-ses](https://www.npmjs.com/package/node-ses) - A simple and reliable Node.js mail for sending mail through Amazon SES.
