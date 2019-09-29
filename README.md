@@ -38,7 +38,7 @@ export ZEEBE_TXES_AWS_SES_SECRET=<AWS SES credential secret>
 
 (Obviously substituting the values in the URL).
 
-You should recieve a welcome email in your inbox from the microservice.
+You should receive a welcome email in your inbox from the microservice.
 
 Watch the videos for more insight, or just read the code. Or why not both?
 
