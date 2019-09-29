@@ -41,23 +41,14 @@ export class AppService {
 
     async sendEmail(templateName: string, data: EmailJobData) {
         const { email, firstName, lastName } = data;
-
-        this.logger.info({
-            email,
-            firstName,
-            lastName,
-            template: templateName,
-        });
         // Validate email?? - throw if not valid!
         if (!EmailValidator.validate(email)) {
-            this.logger.error(`Email address ${email} does not validate`);
             throw new Error(`Email address ${email} does not validate`);
         }
 
         const template = templates[templateName];
 
         if (!template) {
-            this.logger.error(`Template ${templateName} not found!`);
             throw new Error(`Template ${templateName} not found!`);
         }
 
@@ -96,9 +87,9 @@ export class AppService {
                 (err, _, __) => {
                     if (err) {
                         this.logger.error(err.Message);
-                        return reject(err.Message);
+                        return reject(new Error(err.Message));
                     }
-                    this.logger.info(`Email sent to ${email}`);
+                    this.logger.info(`Email ${templateName} sent to ${email}`);
                     resolve();
                 },
             ),
