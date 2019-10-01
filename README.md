@@ -1,5 +1,9 @@
 # Transactional Email Microservice for Zeebe
 
+<p align="center">
+  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
+</p>
+
 Send templated transactional emails using Amazon SES from BPMN processes in [Zeebe.io](https://zeebe.io). 
 
 ![](img/bpmn.png)
