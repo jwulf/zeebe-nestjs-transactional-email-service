@@ -42,7 +42,7 @@ export class AppController {
         });
     }
 
-    // Subscribe to events of type 'payment-service
+    // Subscribe to events of type 'email:send'
     @ZeebeWorker('email:send', {
         fetchVariable: ['email', 'firstName', 'lastName'],
     })
